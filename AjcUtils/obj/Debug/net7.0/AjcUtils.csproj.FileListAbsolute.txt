@@ -12,3 +12,6 @@ C:\Users\Lardson\source\repos\AjcUtils\AjcUtils\obj\Debug\net7.0\refint\AjcUtils
 C:\Users\Lardson\source\repos\AjcUtils\AjcUtils\obj\Debug\net7.0\AjcUtils.pdb
 C:\Users\Lardson\source\repos\AjcUtils\AjcUtils\obj\Debug\net7.0\AjcUtils.genruntimeconfig.cache
 C:\Users\Lardson\source\repos\AjcUtils\AjcUtils\obj\Debug\net7.0\ref\AjcUtils.dll
+C:\Users\Lardson\source\repos\AjcUtils\AjcUtils\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Lardson\source\repos\AjcUtils\AjcUtils\obj\Debug\net7.0\AjcUtils.csproj.AssemblyReference.cache
+C:\Users\Lardson\source\repos\AjcUtils\AjcUtils\obj\Debug\net7.0\AjcUtils.csproj.CopyComplete
