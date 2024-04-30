@@ -8,50 +8,79 @@ class AjcUtils
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("1. | Enable Dev tools         |");
-            Console.WriteLine("2. | Disable Dev tools        |");
-            Console.WriteLine("3. | Enable Cache auto-clear  |");
-            Console.WriteLine("4. | Disable Cache auto-clear |");
-            Console.WriteLine("5. | Enable Client Updates    |");
-            Console.WriteLine("6. | Disable Client Updates   |");
-            Console.WriteLine("7. | Clear Cache              |");
+            Console.WriteLine("1. | Dev Tools                |");
+            Console.WriteLine("2. | Cache auto-clear         |");
+            Console.WriteLine("3. | Client auto-update       |");
+            Console.WriteLine("4. | Clear Cache              |");
 
             string answer = Console.ReadLine();
 
             if (answer == "1")
             {
                 Console.Clear();
-                EnableDevTools();
+                Console.WriteLine("1. | Enable Dev Tools    |");
+                Console.WriteLine("2. | Disable Dev Tools   |");
+                string answer2 = Console.ReadLine();
+
+                if (answer2 == "1")
+                {
+                    Console.Clear();
+                    EnableDevTools();
+                }
+
+                else if (answer2 == "2")
+                {
+                    Console.Clear();
+                    DisableDevTools();
+                }
+
+
             }
 
             else if (answer == "2")
             {
                 Console.Clear();
-                DisableDevTools();
+                Console.WriteLine("1. | Enable Cache auto-clear  |");
+                Console.WriteLine("2. | Disable Cache auto-clear |");
+                string answer3 = Console.ReadLine();
+
+                if (answer3 == "1")
+                {
+                    Console.Clear();
+                    AutoClearEnable();
+                }
+
+                else if (answer3 == "2")
+                {
+                    Console.Clear();
+                    AutoClearDisable();
+                }
+
             }
 
             else if (answer == "3")
             {
-                AutoClearEnable();
+                Console.Clear();
+                Console.WriteLine("1. | Enable Client auto-update  |");
+                Console.WriteLine("2. | Disable Client auto-update |");
+                string answer4 = Console.ReadLine();
+
+                if (answer4 == "1")
+                {
+                    Console.Clear();
+                    EnableUpdates();
+                }
+
+                else if (answer4 == "2")
+                {
+                    Console.Clear();
+                    DisableUpdates();
+                }
             }
 
             else if (answer == "4")
             {
-                AutoClearDisable();
-            }
-
-            else if (answer == "5")
-            {
-                EnableUpdates();
-            }
-
-            else if (answer == "6")
-            {
-                DisableUpdates();
-            }
-
-            else if (answer == "7")
-            {
+                Console.Clear();
                 ClearCache();
             }
 
@@ -67,12 +96,12 @@ class AjcUtils
         string username = Environment.UserName;
         Console.WriteLine("Checking for app.asar");
 
-        if (File.Exists(@$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app.asar"))
+        if (File.Exists(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar"))
         {
             Console.WriteLine("Removing app.asar");
             try
             {
-                File.Delete(@$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app.asar");
+                File.Delete(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar");
                 Console.WriteLine("Removed app.asar");
             }
 
@@ -87,8 +116,8 @@ class AjcUtils
         {
             Console.WriteLine("No asar file detected, skipping");
         }
-       
-        if (Directory.Exists(@$"C:\\Users\\{username}\\AppData\\Local\\aj-classic-updater\\package\\resources\\app"))
+
+        if (Directory.Exists(@$"C:\\Users\\{username}\\AppData\\Local\\Programs\aj-classic\\resources\\app"))
         {
             Console.WriteLine("App folder already copied, skipping.");
         }
@@ -96,7 +125,8 @@ class AjcUtils
         {
             try
             {
-                CopyDirectory(@"app", @$"C:\\Users\\{username}\\AppData\\Local\\aj-classic-updater\\package\\resources\\", true);
+                Console.WriteLine("Copying App folder");
+                CopyDirectory(@"app", @$"C:\\Users\\{username}\\AppData\\Local\\Programs\aj-classic\\resources\\", true);
             }
 
             catch (Exception ex)
@@ -110,7 +140,7 @@ class AjcUtils
     {
         ReplaceAsar();
         string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app\config.js";
+        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
 
         try
         {
@@ -143,7 +173,7 @@ class AjcUtils
     {
         ReplaceAsar();
         string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app\config.js";
+        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
 
         try
         {
@@ -176,8 +206,8 @@ class AjcUtils
     {
         ReplaceAsar();
         string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app\config.js";
-        
+        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
+
         try
         {
             // Read all lines of the JavaScript file
@@ -209,7 +239,7 @@ class AjcUtils
     {
         ReplaceAsar();
         string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app\config.js";
+        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
 
         try
         {
@@ -242,7 +272,7 @@ class AjcUtils
     {
         ReplaceAsar();
         string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app\config.js";
+        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
 
         try
         {
@@ -275,7 +305,7 @@ class AjcUtils
     {
         ReplaceAsar();
         string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\aj-classic-updater\package\resources\app\config.js";
+        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
 
         try
         {
