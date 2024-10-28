@@ -9,7 +9,7 @@ class AjcUtils
         {
             Console.Clear();
             Console.WriteLine("1. | Dev Tools                |");
-            Console.WriteLine("2. | Cache auto-clear         |");
+            Console.WriteLine("2. | Cache clear on startup   |");
             Console.WriteLine("3. | Client auto-update       |");
             Console.WriteLine("4. | Clear Cache              |");
 
@@ -86,7 +86,7 @@ class AjcUtils
 
             Console.WriteLine("-------------------------------\nDone! Press Enter to Exit, or M to return to menu.");
             string input = Console.ReadLine().ToLower();
-            if (input != "m")
+            if (input.ToLower() != "m")
                 break; // Exit the loop and end the program
         }
     }
@@ -94,45 +94,57 @@ class AjcUtils
     static void ReplaceAsar()
     {
         string username = Environment.UserName;
-        Console.WriteLine("Checking for app.asar");
 
-        if (File.Exists(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar"))
-        {
-            Console.WriteLine("Removing app.asar");
-            try
+        if (Directory.Exists($@"C:\Users\{username}\AppData\Local\Programs\aj-classic")) {
+
+            Console.WriteLine("Ajc is installed. Checking for app.asar");
+
+            if (File.Exists(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar"))
             {
-                File.Delete(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar");
-                Console.WriteLine("Removed app.asar");
+                Console.WriteLine("App.asar exists");
+                Console.WriteLine("Removing app.asar");
+                try
+                {
+                    File.Delete(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar");
+                    Console.WriteLine("Removed app.asar");
+                }
+
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error occured: {ex.Message}");
+                }
+
             }
 
-            catch
+            else
             {
-                Console.WriteLine("Error occured.");
+                Console.WriteLine("No asar file detected, skipping");
             }
 
+            if (Directory.Exists(@$"C:\\Users\\{username}\\AppData\\Local\\Programs\aj-classic\\resources\\app"))
+            {
+                Console.WriteLine("App folder copied, skipping.");
+            }
+            else
+            {
+                try
+                {
+                    Console.WriteLine("Copying App folder");
+                    CopyDirectory(@"app", @$"C:\\Users\\{username}\\AppData\\Local\\Programs\aj-classic\\resources\\", true);
+                }
+
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
+
+            }
         }
 
         else
         {
-            Console.WriteLine("No asar file detected, skipping");
-        }
-
-        if (Directory.Exists(@$"C:\\Users\\{username}\\AppData\\Local\\Programs\aj-classic\\resources\\app"))
-        {
-            Console.WriteLine("App folder already copied, skipping.");
-        }
-        else
-        {
-            try
-            {
-                Console.WriteLine("Copying App folder");
-                CopyDirectory(@"app", @$"C:\\Users\\{username}\\AppData\\Local\\Programs\aj-classic\\resources\\", true);
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
+            Console.WriteLine("Aj Classic is not installed. Exiting...");
+            Environment.Exit(0);
         }
     }
 
@@ -395,7 +407,6 @@ class AjcUtils
         }
 
         // If recursive and copying subdirectories, recursively call this method
-        // Also, i'm really fucking tired.
         if (recursive)
         {
             foreach (DirectoryInfo subDir in dirs)
