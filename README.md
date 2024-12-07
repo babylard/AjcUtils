@@ -2,4 +2,4 @@
 
 AjcUtils is a Console App written in C# that takes advantage of some abilities of the Animal Jam Classic client only intended for devs, like enabling the Inspect tool, Auto-Clearing cache on exit, Enabling/Disabling client updates, etc. This isn't anything special but I plan on adding more features and making it less jank over time.
 
-![AjcUtils_bpB5hEvU7P](https://github.com/babylard/AjcUtils/assets/75695872/c2343041-99f5-4c9e-b1cb-00d81c04ac41)
+![WindowsTerminal_19oQaFSfM1](https://github.com/user-attachments/assets/c7678957-b28e-425a-b75f-e2b579721299)
