@@ -2,6 +2,32 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "craftersmine.Asar.Net/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.2",
+          "System.Memory": "4.5.5"
+        },
+        "compile": {
+          "lib/netstandard2.0/craftersmine.Asar.Net.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/craftersmine.Asar.Net.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "DotNet.Glob/3.1.3": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.1/DotNet.Glob.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/DotNet.Glob.dll": {}
+        }
+      },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
@@ -14,10 +40,51 @@
             "related": ".xml"
           }
         }
+      },
+      "System.Memory/4.5.5": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.1/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/_._": {}
+        }
       }
     }
   },
   "libraries": {
+    "craftersmine.Asar.Net/1.1.0": {
+      "sha512": "Ky1Imj2CdHsHmAagyJgYjs7tVUNMoZ+zoYJRJ0jOH7FdDH62aqamRI+sbc8VWO4i2/WeL3eHy9uoY4Zpqq8Fpg==",
+      "type": "package",
+      "path": "craftersmine.asar.net/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "craftersmine.asar.net.1.1.0.nupkg.sha512",
+        "craftersmine.asar.net.nuspec",
+        "lib/netstandard2.0/craftersmine.Asar.Net.dll",
+        "lib/netstandard2.0/craftersmine.Asar.Net.xml",
+        "logo.png"
+      ]
+    },
+    "DotNet.Glob/3.1.3": {
+      "sha512": "hOfHw7MLJw/tbXaFwR1oiDb+dIXDp8URTxp5Pco42OOhiw77wrUNx6v6syNygHZbWwYdXQocL2Mo1l5FnfDVjg==",
+      "type": "package",
+      "path": "dotnet.glob/3.1.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dotnet.glob.3.1.3.nupkg.sha512",
+        "dotnet.glob.nuspec",
+        "lib/net40/DotNet.Glob.dll",
+        "lib/net45/DotNet.Glob.dll",
+        "lib/net46/DotNet.Glob.dll",
+        "lib/netcoreapp2.1/DotNet.Glob.dll",
+        "lib/netstandard1.1/DotNet.Glob.dll",
+        "lib/netstandard2.1/DotNet.Glob.dll"
+      ]
+    },
     "Newtonsoft.Json/13.0.3": {
       "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
       "type": "package",
@@ -47,11 +114,36 @@
         "newtonsoft.json.nuspec",
         "packageIcon.png"
       ]
+    },
+    "System.Memory/4.5.5": {
+      "sha512": "XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
+      "type": "package",
+      "path": "system.memory/4.5.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/System.Memory.dll",
+        "lib/net461/System.Memory.xml",
+        "lib/netcoreapp2.1/_._",
+        "lib/netstandard1.1/System.Memory.dll",
+        "lib/netstandard1.1/System.Memory.xml",
+        "lib/netstandard2.0/System.Memory.dll",
+        "lib/netstandard2.0/System.Memory.xml",
+        "ref/netcoreapp2.1/_._",
+        "system.memory.4.5.5.nupkg.sha512",
+        "system.memory.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Newtonsoft.Json >= 13.0.3"
+      "DotNet.Glob >= 3.1.3",
+      "Newtonsoft.Json >= 13.0.3",
+      "craftersmine.Asar.Net >= 1.1.0"
     ]
   },
   "packageFolders": {
@@ -98,9 +190,17 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "DotNet.Glob": {
+            "target": "Package",
+            "version": "[3.1.3, )"
+          },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
+          },
+          "craftersmine.Asar.Net": {
+            "target": "Package",
+            "version": "[1.1.0, )"
           }
         },
         "imports": [
@@ -119,7 +219,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   }
