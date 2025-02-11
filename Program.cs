@@ -19,134 +19,132 @@ class AjcUtils
 
             string answer = Console.ReadLine();
 
-            if (answer == "1")
+            switch (answer)
             {
-                Console.Clear();
-                Console.WriteLine("1. | Enable Dev Tools    |");
-                Console.WriteLine("2. | Disable Dev Tools   |");
-                string answer2 = Console.ReadLine();
-
-                if (answer2 == "1")
-                {
+                case "1":
+                    HandleDevTools();
+                    break;
+                case "2":
+                    HandleCacheClear();
+                    break;
+                case "3":
+                    HandleAutoUpdate();
+                    break;
+                case "4":
                     Console.Clear();
                     ReplaceAsar();
-                    EnableDevTools();
-                }
-
-                else if (answer2 == "2")
-                {
-                    Console.Clear();
-                    ReplaceAsar();
-                    DisableDevTools();
-                }
-
-
-            }
-
-            else if (answer == "2")
-            {
-                Console.Clear();
-                Console.WriteLine("1. | Enable Cache auto-clear  |");
-                Console.WriteLine("2. | Disable Cache auto-clear |");
-                string answer3 = Console.ReadLine();
-
-                if (answer3 == "1")
-                {
-                    Console.Clear();
-                    ReplaceAsar();
-                    AutoClearEnable();
-                }
-
-                else if (answer3 == "2")
-                {
-                    Console.Clear();
-                    ReplaceAsar();
-                    AutoClearDisable();
-                }
-
-            }
-
-            else if (answer == "3")
-            {
-                Console.Clear();
-                Console.WriteLine("1. | Enable Client auto-update  |");
-                Console.WriteLine("2. | Disable Client auto-update |");
-                string answer4 = Console.ReadLine();
-
-                if (answer4 == "1")
-                {
-                    Console.Clear();
-                    ReplaceAsar();
-                    EnableUpdates();
-                }
-
-                else if (answer4 == "2")
-                {
-                    Console.Clear();
-                    ReplaceAsar();
-                    DisableUpdates();
-                }
-            }
-
-            else if (answer == "4")
-            {
-                Console.Clear();
-                ReplaceAsar();
-                ClearCache();
-            }
-
-            else if (answer == "5")
-            {
-                // Different method of modifying and repacking the asar if both the
-                // unpacked, and packed version are present for some reason.
-                if (Directory.Exists(archive) && File.Exists(asar))
-                {
-                    try
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Deleting asar.");
-                        File.Delete(asar);
-                        DisableDevTools();
-                        EnableUpdates();
-                        AutoClearDisable();
-                        ClearCache();
-                        RePack();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Exception: {ex}");
-                    }
-                }
-                else if (Directory.Exists(archive))
-                {
-                    try
-                    {
-                        Console.WriteLine("Resetting all to defaults.");
-                        DisableDevTools();
-                        EnableUpdates();
-                        AutoClearDisable();
-                        ClearCache();
-                        RePack();
-                    }
-
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Exception: {ex}");
-                    }
-                }
-
-                // If nothing has been modified previously, only clear Electron cache.
-                else if (File.Exists(asar))
-                {
-                    Console.WriteLine("Asar hasn't been unpacked, only clearing cache.");
                     ClearCache();
-                }
+                    break;
+                case "5":
+                    ResetAll();
+                    break;
+                default:
+                    break;
             }
 
             Console.WriteLine("-------------------------------\nDone! Press Enter to Exit, or M to return to menu.");
-            string input = Console.ReadLine().ToLower();
-            if (input.ToLower() != "m")
+            if (Console.ReadLine().ToLower() != "m")
                 break; // Exit the loop and end the program
+        }
+    }
+
+    static void HandleDevTools()
+    {
+        Console.Clear();
+        Console.WriteLine("1. | Enable Dev Tools    |");
+        Console.WriteLine("2. | Disable Dev Tools   |");
+        string answer2 = Console.ReadLine();
+
+        Console.Clear();
+        ReplaceAsar();
+        if (answer2 == "1")
+        {
+            EnableDevTools();
+        }
+        else if (answer2 == "2")
+        {
+            DisableDevTools();
+        }
+    }
+
+    static void HandleCacheClear()
+    {
+        Console.Clear();
+        Console.WriteLine("1. | Enable Cache auto-clear  |");
+        Console.WriteLine("2. | Disable Cache auto-clear |");
+        string answer3 = Console.ReadLine();
+
+        Console.Clear();
+        ReplaceAsar();
+        if (answer3 == "1")
+        {
+            AutoClearEnable();
+        }
+        else if (answer3 == "2")
+        {
+            AutoClearDisable();
+        }
+    }
+
+    static void HandleAutoUpdate()
+    {
+        Console.Clear();
+        Console.WriteLine("1. | Enable Client auto-update  |");
+        Console.WriteLine("2. | Disable Client auto-update |");
+        string answer4 = Console.ReadLine();
+
+        Console.Clear();
+        ReplaceAsar();
+        if (answer4 == "1")
+        {
+            EnableUpdates();
+        }
+        else if (answer4 == "2")
+        {
+            DisableUpdates();
+        }
+    }
+
+    static void ResetAll()
+    {
+        if (Directory.Exists(archive) && File.Exists(asar))
+        {
+            try
+            {
+                Console.Clear();
+                Console.WriteLine("Deleting asar.");
+                File.Delete(asar);
+                DisableDevTools();
+                EnableUpdates();
+                AutoClearDisable();
+                ClearCache();
+                RePack();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex}");
+            }
+        }
+        else if (Directory.Exists(archive))
+        {
+            try
+            {
+                Console.WriteLine("Resetting all to defaults.");
+                DisableDevTools();
+                EnableUpdates();
+                AutoClearDisable();
+                ClearCache();
+                RePack();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception: {ex}");
+            }
+        }
+        else if (File.Exists(asar))
+        {
+            Console.WriteLine("Asar hasn't been unpacked, only clearing cache.");
+            ClearCache();
         }
     }
 
@@ -160,7 +158,6 @@ class AjcUtils
     {
         if (Directory.Exists($@"C:\Users\{username}\AppData\Local\Programs\aj-classic"))
         {
-
             Console.WriteLine("Ajc is installed. Checking for app.asar");
 
             if (File.Exists(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar"))
@@ -178,14 +175,11 @@ class AjcUtils
                     }
                     Console.WriteLine("Unpacked app.asar");
                 }
-
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error occured: {ex.Message}");
+                    Console.WriteLine($"Error occurred: {ex.Message}");
                 }
-
             }
-
             else if (Directory.Exists(archive))
             {
                 Console.WriteLine("App folder already Unpacked, skipping.");
@@ -195,7 +189,6 @@ class AjcUtils
                 Console.WriteLine("No Packed/Unpacked asar detected. (is your install broken?)");
             }
         }
-
         else
         {
             Console.WriteLine("Aj Classic is not installed. Exiting...");
@@ -205,243 +198,70 @@ class AjcUtils
 
     static void RePack()
     {
-        Console.WriteLine(" Attempting to RePack asar archive.");
+        Console.WriteLine("Attempting to RePack asar archive.");
         try
         {
             using AsarArchiver archiver = new(archive, asar);
             archiver.Archive();
+            archiver.Dispose();
             if (Directory.Exists(archive))
             {
                 DeleteDirectory(archive);
             }
         }
-
         catch (Exception ex)
         {
             Console.WriteLine($"Exception: {ex}");
         }
     }
+
     static void EnableDevTools()
     {
-        try
-        {
-            // Read all lines of the JavaScript file
-            string[] lines = File.ReadAllLines(config);
-
-            // Find the line containing the "showTools" property
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("showTools"))
-                {
-                    // Modify the line to set showTools to true
-                    lines[i] = lines[i].Replace("false", "true");
-                    break;
-                }
-            }
-
-            // Write the modified lines back to the file
-            File.WriteAllLines(config, lines);
-
-            Console.WriteLine("JavaScript file modified successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
+        ModifyConfig("showTools", "false", "true");
     }
 
     static void DisableDevTools()
     {
-        string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
-
-        try
-        {
-            // Read all lines of the JavaScript file
-            string[] lines = File.ReadAllLines(filePath);
-
-            // Find the line containing the "showTools" property
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("showTools"))
-                {
-                    // Modify the line to set showTools to true
-                    lines[i] = lines[i].Replace("true", "false");
-                    break;
-                }
-            }
-
-            // Write the modified lines back to the file
-            File.WriteAllLines(filePath, lines);
-
-            Console.WriteLine("JavaScript file modified successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
+        ModifyConfig("showTools", "true", "false");
     }
 
     static void AutoClearEnable()
     {
-        string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
-
-        try
-        {
-            // Read all lines of the JavaScript file
-            string[] lines = File.ReadAllLines(filePath);
-
-            // Find the line containing the "showTools" property
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("clearCache"))
-                {
-                    // Modify the line to set showTools to true
-                    lines[i] = lines[i].Replace("false", "true");
-                    break;
-                }
-            }
-
-            // Write the modified lines back to the file
-            File.WriteAllLines(filePath, lines);
-
-            Console.WriteLine("JavaScript file modified successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
+        ModifyConfig("clearCache", "false", "true");
     }
 
     static void AutoClearDisable()
     {
-        string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
-
-        try
-        {
-            // Read all lines of the JavaScript file
-            string[] lines = File.ReadAllLines(filePath);
-
-            // Find the line containing the "showTools" property
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("clearCache"))
-                {
-                    // Modify the line to set showTools to true
-                    lines[i] = lines[i].Replace("true", "false");
-                    break;
-                }
-            }
-
-            // Write the modified lines back to the file
-            File.WriteAllLines(filePath, lines);
-
-            Console.WriteLine("JavaScript file modified successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
+        ModifyConfig("clearCache", "true", "false");
     }
 
     static void DisableUpdates()
     {
-        string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
-
-        try
-        {
-            // Read all lines of the JavaScript file
-            string[] lines = File.ReadAllLines(filePath);
-
-            // Find the line containing the "showTools" property
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("noUpdater"))
-                {
-                    // Modify the line to set showTools to true
-                    lines[i] = lines[i].Replace("false", "true");
-                    break;
-                }
-            }
-
-            // Write the modified lines back to the file
-            File.WriteAllLines(filePath, lines);
-
-            Console.WriteLine("JavaScript file modified successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
+        ModifyConfig("noUpdater", "false", "true");
     }
 
     static void EnableUpdates()
     {
-        string username = Environment.UserName;
-        string filePath = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app\config.js";
-
-        try
-        {
-            // Read all lines of the JavaScript file
-            string[] lines = File.ReadAllLines(filePath);
-
-            // Find the line containing the "showTools" property
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].Contains("noUpdater"))
-                {
-                    // Modify the line to set showTools to true
-                    lines[i] = lines[i].Replace("true", "false");
-                    break;
-                }
-            }
-
-            // Write the modified lines back to the file
-            File.WriteAllLines(filePath, lines);
-
-            Console.WriteLine("JavaScript file modified successfully.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
+        ModifyConfig("noUpdater", "true", "false");
     }
 
     static void ClearCache()
     {
-        string username = Environment.UserName;
-        string cache = @$"C:\\Users\\{username}\\AppData\\Roaming\\AJ Classic";
+        string cache = @$"C:\Users\{username}\AppData\Roaming\AJ Classic";
         Console.WriteLine("Clearing Cache");
 
         if (Directory.Exists(cache))
         {
             try
             {
-                // Get the parent directory
-                string parentDirectory = Directory.GetParent(cache).FullName;
-
-                // Get the name of the directory to delete
-                string directoryName = new DirectoryInfo(cache).Name;
-
-                // Combine parent directory and directory name
-                string directoryToDelete = Path.Combine(parentDirectory, directoryName);
-
-                // Delete the specified directory
-                Directory.Delete(directoryToDelete, true);
-
-                Console.WriteLine("Cache cleared sucessfully");
+                Directory.Delete(cache, true);
+                Console.WriteLine("Cache cleared successfully");
             }
             catch (IOException e)
             {
                 Console.WriteLine("An error occurred: " + e.Message + "\n\n Contact us in the Discord server if you need any help!");
             }
-
-
         }
-
         else
         {
             Console.WriteLine("No current cache detected");
@@ -455,19 +275,19 @@ class AjcUtils
 
         // Check if the source directory exists
         if (!dir.Exists)
+        {
             throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+        }
 
-        // Cache directories before we start copying
+        // If the destination directory doesn't exist, create it
         DirectoryInfo[] dirs = dir.GetDirectories();
-
-        // Create the destination directory
         Directory.CreateDirectory(destinationDir);
 
         // Get the files in the source directory and copy to the destination directory
         foreach (FileInfo file in dir.GetFiles())
         {
             string targetFilePath = Path.Combine(destinationDir, file.Name);
-            file.CopyTo(targetFilePath);
+            file.CopyTo(targetFilePath, true);
         }
 
         // If recursive and copying subdirectories, recursively call this method
@@ -498,5 +318,27 @@ class AjcUtils
         }
 
         Directory.Delete(target_dir, false);
+    }
+
+    static void ModifyConfig(string key, string oldValue, string newValue)
+    {
+        try
+        {
+            string[] lines = File.ReadAllLines(config);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains(key))
+                {
+                    lines[i] = lines[i].Replace(oldValue, newValue);
+                    break;
+                }
+            }
+            File.WriteAllLines(config, lines);
+            Console.WriteLine("JavaScript file modified successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
     }
 }

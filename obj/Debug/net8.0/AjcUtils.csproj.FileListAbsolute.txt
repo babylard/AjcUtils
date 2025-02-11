@@ -16,3 +16,4 @@ C:\Users\William\source\repos\AjcUtils\obj\Debug\net8.0\refint\AjcUtils.dll
 C:\Users\William\source\repos\AjcUtils\obj\Debug\net8.0\AjcUtils.pdb
 C:\Users\William\source\repos\AjcUtils\obj\Debug\net8.0\AjcUtils.genruntimeconfig.cache
 C:\Users\William\source\repos\AjcUtils\obj\Debug\net8.0\ref\AjcUtils.dll
+C:\Users\William\source\repos\AjcUtils\obj\Debug\net8.0\AjcUtils.sourcelink.json
