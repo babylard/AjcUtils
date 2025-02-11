@@ -1,0 +1,3 @@
+[submodule "asarsharp"]
+	path = asarsharp
+	url = https://github.com/MWR1/asarsharp.git
