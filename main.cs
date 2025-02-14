@@ -33,7 +33,7 @@ class AjcUtils
                 case "4":
                     Console.Clear();
                     ReplaceAsar();
-                    ClearCache();
+                    HandleCacheClear();
                     break;
                 case "5":
                     ResetAll();
@@ -67,25 +67,6 @@ class AjcUtils
         }
     }
 
-    static void HandleCacheClear()
-    {
-        Console.Clear();
-        Console.WriteLine("1. | Enable Cache auto-clear  |");
-        Console.WriteLine("2. | Disable Cache auto-clear |");
-        string answer3 = Console.ReadLine();
-
-        Console.Clear();
-        ReplaceAsar();
-        if (answer3 == "1")
-        {
-            AutoClearEnable();
-        }
-        else if (answer3 == "2")
-        {
-            AutoClearDisable();
-        }
-    }
-
     static void HandleAutoUpdate()
     {
         Console.Clear();
@@ -105,6 +86,28 @@ class AjcUtils
         }
     }
 
+    static void HandleCacheClear()
+    {
+        Console.Clear();
+        Console.WriteLine("1. | Clear Aj Classic Cache |");
+        Console.WriteLine("2. | Clear Jam Cache        |");
+        Console.WriteLine("3. | Clear Both Caches      |");
+        string answer5 = Console.ReadLine();
+        Console.Clear();
+        if (answer5 == "1")
+        {
+            ClearCache(1);
+        }
+        else if (answer5 == "2")
+        {
+            ClearCache(2);
+        }
+        else if (answer5 == "3")
+        {
+            ClearCache(3);
+        }
+    }
+
     static void ResetAll()
     {
         if (Directory.Exists(archive) && File.Exists(asar))
@@ -117,7 +120,7 @@ class AjcUtils
                 DisableDevTools();
                 EnableUpdates();
                 AutoClearDisable();
-                ClearCache();
+                ClearCache(1);
                 RePack();
             }
             catch (Exception ex)
@@ -133,7 +136,7 @@ class AjcUtils
                 DisableDevTools();
                 EnableUpdates();
                 AutoClearDisable();
-                ClearCache();
+                ClearCache(1);
                 RePack();
             }
             catch (Exception ex)
@@ -144,7 +147,7 @@ class AjcUtils
         else if (File.Exists(asar))
         {
             Console.WriteLine("Asar hasn't been unpacked, only clearing cache.");
-            ClearCache();
+            ClearCache(1);
         }
     }
 
@@ -245,27 +248,73 @@ class AjcUtils
         ModifyConfig("noUpdater", "true", "false");
     }
 
-    static void ClearCache()
+    static void ClearCache(int JamOrClassic)
     {
-        string cache = @$"C:\Users\{username}\AppData\Roaming\AJ Classic";
+        string ClassicCache = @$"C:\Users\{username}\AppData\Roaming\AJ Classic";
+        string JamCache = @$"C:\Users\{username}\AppData\Roaming\jam";
         Console.WriteLine("Clearing Cache");
 
-        if (Directory.Exists(cache))
+        switch (JamOrClassic)
         {
-            try
-            {
-                Directory.Delete(cache, true);
-                Console.WriteLine("Cache cleared successfully");
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("An error occurred: " + e.Message + "\n\n Contact us in the Discord server if you need any help!");
-            }
+            case 1: // Deletes Aj Classic Cache
+                if (Directory.Exists(ClassicCache))
+                {
+                    try
+                    {
+                        Directory.Delete(ClassicCache, true);
+                        Console.WriteLine("Cache cleared successfully");
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine($"An error occurred: {e}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Ajc not installed or Cache is already cleared.");
+                }
+                break;
+
+            case 2: // Deletes Jam Cache (if installed)
+                if (Directory.Exists(JamCache))
+                {
+                    try
+                    {
+                        Directory.Delete(JamCache, true);
+                        Console.WriteLine("Cache cleared successfully");
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine($"An error occurred: {e}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Jam is not installed or Cache is already cleared.");
+                }
+                break;
+            case 3: // Deletes both caches
+                if (Directory.Exists(ClassicCache) && Directory.Exists(JamCache))
+                {
+                    try
+                    {
+                        Directory.Delete(ClassicCache, true);
+                        Directory.Delete(JamCache, true);
+                        Console.WriteLine("Cache cleared successfully");
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine($"An error occurred: {e}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No current cache detected or Jam/Ajc is not installed");
+                }
+                break;
+
         }
-        else
-        {
-            Console.WriteLine("No current cache detected");
-        }
+        
     }
 
     public static void DeleteDirectory(string target_dir)
