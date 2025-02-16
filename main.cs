@@ -31,8 +31,6 @@ class AjcUtils
                     HandleAutoUpdate();
                     break;
                 case "4":
-                    Console.Clear();
-                    ReplaceAsar();
                     HandleCacheClear();
                     break;
                 case "5":
@@ -92,19 +90,29 @@ class AjcUtils
         Console.WriteLine("1. | Clear Aj Classic Cache |");
         Console.WriteLine("2. | Clear Jam Cache        |");
         Console.WriteLine("3. | Clear Both Caches      |");
+        Console.WriteLine("#  |------------------------|");
+        Console.WriteLine("4. | Auto-Clear Enable      |");
+        Console.WriteLine("5. | Auto-Clear Disable     ");
         string answer5 = Console.ReadLine();
         Console.Clear();
-        if (answer5 == "1")
+
+        switch (answer5)
         {
-            ClearCache(1);
-        }
-        else if (answer5 == "2")
-        {
-            ClearCache(2);
-        }
-        else if (answer5 == "3")
-        {
-            ClearCache(3);
+            case "1":
+                ClearCache(1);
+                break;
+            case "2":
+                ClearCache(2);
+                break;
+            case "3":
+                ClearCache(3);
+                break;
+            case "4":
+                AutoClearEnable();
+                break;
+            case "5":
+                AutoClearEnable();
+                break;
         }
     }
 
@@ -125,7 +133,7 @@ class AjcUtils
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception: {ex}");
+                Console.WriteLine(ex.Message);
             }
         }
         else if (Directory.Exists(archive))
@@ -141,7 +149,7 @@ class AjcUtils
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception: {ex}");
+                Console.WriteLine(ex.Message);
             }
         }
         else if (File.Exists(asar))
@@ -180,7 +188,7 @@ class AjcUtils
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error occurred: {ex.Message}");
+                    Console.WriteLine(ex.Message);
                 }
             }
             else if (Directory.Exists(archive))
@@ -214,10 +222,11 @@ class AjcUtils
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Exception: {ex}");
+            Console.WriteLine(ex.Message);
         }
     }
 
+    // Simplified functions because I aint typing allat
     static void EnableDevTools()
     {
         ModifyConfig("showTools", "false", "true");
@@ -264,9 +273,9 @@ class AjcUtils
                         Directory.Delete(ClassicCache, true);
                         Console.WriteLine("Cache cleared successfully");
                     }
-                    catch (IOException e)
+                    catch (IOException ex)
                     {
-                        Console.WriteLine($"An error occurred: {e}");
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 else
@@ -283,9 +292,9 @@ class AjcUtils
                         Directory.Delete(JamCache, true);
                         Console.WriteLine("Cache cleared successfully");
                     }
-                    catch (IOException e)
+                    catch (IOException ex)
                     {
-                        Console.WriteLine($"An error occurred: {e}");
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 else
@@ -302,9 +311,9 @@ class AjcUtils
                         Directory.Delete(JamCache, true);
                         Console.WriteLine("Cache cleared successfully");
                     }
-                    catch (IOException e)
+                    catch (Exception ex)
                     {
-                        Console.WriteLine($"An error occurred: {e}");
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 else
@@ -354,7 +363,7 @@ class AjcUtils
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"An error occurred: {ex.Message}");
+            Console.WriteLine(ex.Message);
         }
     }
 }
