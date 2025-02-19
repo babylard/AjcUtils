@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AjcUtils")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7e46ed9ad3edbad99abcb237d7e9312cb304056")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74118e8a59536b47b64f971185692517a585b16c")]
 [assembly: System.Reflection.AssemblyProductAttribute("AjcUtils")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AjcUtils")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

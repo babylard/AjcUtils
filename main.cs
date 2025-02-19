@@ -67,8 +67,8 @@ class AjcUtils
             }
             else if (keyInfo.Key == ConsoleKey.Escape)
             {
-                Console.Clear(); // Clear the console to avoid leftover characters
-                return -1; // Special value to indicate Esc was pressed
+                Console.Clear();
+                return -1; // value to indicate Esc was pressed
             }
         }
     }
