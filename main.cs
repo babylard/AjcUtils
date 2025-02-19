@@ -7,59 +7,114 @@ class AjcUtils
 {
     static void Main(string[] args)
     {
+        string[] mainMenuOptions = {
+            "Dev Tools",
+            "Client auto-update",
+            "Clear Cache",
+            "Reset all",
+            "Unpack",
+            "Repack"
+        };
+
         while (true)
         {
-            Console.Clear();
-            Console.WriteLine("1. | Dev Tools                |");
-            Console.WriteLine("2. | Cache clear on startup   |");
-            Console.WriteLine("3. | Client auto-update       |");
-            Console.WriteLine("4. | Clear Cache              |");
-            Console.WriteLine("#  |--------------------------|");
-            Console.WriteLine("5. | Reset all                |");
-            
-            string answer = Console.ReadLine();
-
-            switch (answer)
-            {
-                case "1":
-                    HandleDevTools();
-                    break;
-                case "2":
-                    HandleCacheClear();
-                    break;
-                case "3":
-                    HandleAutoUpdate();
-                    break;
-                case "4":
-                    HandleCacheClear();
-                    break;
-                case "5":
-                    ResetAll();
-                    break;
-                default:
-                    break;
-            }
-
-            Console.WriteLine("-------------------------------\nDone! Press Enter to Exit, or M to return to menu.");
+            int selectedIndex = DisplayMenu("     Select an option and press Enter", mainMenuOptions);
+            HandleSelection(selectedIndex);
+            Console.WriteLine("════════════════════════════════════════\nDone! Press Enter to Exit, or M to return to menu.");
             if (Console.ReadLine().ToLower() != "m")
                 break; // Exit the loop and end the program
         }
     }
 
+    static int DisplayMenu(string prompt, string[] options)
+    {
+        int selectedIndex = 0;
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║           AJ Classic Utils             ║");
+            Console.WriteLine("╚════════════════════════════════════════╝");
+            Console.WriteLine(prompt);
+            Console.WriteLine("╔════════════════════════════════════════╗");
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (i == selectedIndex)
+                {
+                    Console.WriteLine($"║ [*] {options[i].PadRight(34)} ║");
+                }
+                else
+                {
+                    Console.WriteLine($"║ [ ] {options[i].PadRight(34)} ║");
+                }
+            }
+
+            Console.WriteLine("╚════════════════════════════════════════╝");
+
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true); // true to intercept the key press
+            if (keyInfo.Key == ConsoleKey.UpArrow)
+            {
+                selectedIndex = (selectedIndex == 0) ? options.Length - 1 : selectedIndex - 1;
+            }
+            else if (keyInfo.Key == ConsoleKey.DownArrow)
+            {
+                selectedIndex = (selectedIndex == options.Length - 1) ? 0 : selectedIndex + 1;
+            }
+            else if (keyInfo.Key == ConsoleKey.Enter)
+            {
+                return selectedIndex;
+            }
+            else if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                Console.Clear(); // Clear the console to avoid leftover characters
+                return -1; // Special value to indicate Esc was pressed
+            }
+        }
+    }
+
+    static void HandleSelection(int selectedIndex)
+    {
+        switch (selectedIndex)
+        {
+            case 0:
+                HandleDevTools();
+                break;
+            case 1:
+                HandleAutoUpdate();
+                break;
+            case 2:
+                HandleCacheClear();
+                break;
+            case 3:
+                ResetAll();
+                break;
+            case 4:
+                ReplaceAsar();
+                break;
+            case 5:
+                RePack();
+                break;
+        }
+    }
+
     static void HandleDevTools()
     {
-        Console.Clear();
-        Console.WriteLine("1. | Enable Dev Tools    |");
-        Console.WriteLine("2. | Disable Dev Tools   |");
-        string answer2 = Console.ReadLine();
+        string[] devToolsOptions = {
+            "Enable Dev Tools",
+            "Disable Dev Tools"
+        };
+        int selectedIndex = DisplayMenu("Select an option for Dev Tools:", devToolsOptions);
+
+        if (selectedIndex == -1) return; // Exit submenu if Esc was pressed
 
         Console.Clear();
         ReplaceAsar();
-        if (answer2 == "1")
+        if (selectedIndex == 0)
         {
             EnableDevTools();
         }
-        else if (answer2 == "2")
+        else if (selectedIndex == 1)
         {
             DisableDevTools();
         }
@@ -67,18 +122,21 @@ class AjcUtils
 
     static void HandleAutoUpdate()
     {
-        Console.Clear();
-        Console.WriteLine("1. | Enable Client auto-update  |");
-        Console.WriteLine("2. | Disable Client auto-update |");
-        string answer4 = Console.ReadLine();
+        string[] autoUpdateOptions = {
+            "Enable Client auto-update",
+            "Disable Client auto-update"
+        };
+        int selectedIndex = DisplayMenu("Select an option for Client auto-update:", autoUpdateOptions);
+
+        if (selectedIndex == -1) return; // Exit submenu if Esc was pressed
 
         Console.Clear();
         ReplaceAsar();
-        if (answer4 == "1")
+        if (selectedIndex == 0)
         {
             EnableUpdates();
         }
-        else if (answer4 == "2")
+        else if (selectedIndex == 1)
         {
             DisableUpdates();
         }
@@ -86,32 +144,34 @@ class AjcUtils
 
     static void HandleCacheClear()
     {
-        Console.Clear();
-        Console.WriteLine("1. | Clear Aj Classic Cache |");
-        Console.WriteLine("2. | Clear Jam Cache        |");
-        Console.WriteLine("3. | Clear Both Caches      |");
-        Console.WriteLine("#  |------------------------|");
-        Console.WriteLine("4. | Auto-Clear Enable      |");
-        Console.WriteLine("5. | Auto-Clear Disable     ");
-        string answer5 = Console.ReadLine();
-        Console.Clear();
+        string[] cacheClearOptions = {
+            "Clear Aj Classic Cache",
+            "Clear Jam Cache",
+            "Clear Both Caches",
+            "Auto-Clear Enable",
+            "Auto-Clear Disable"
+        };
+        int selectedIndex = DisplayMenu("Select an option for Cache Clear:", cacheClearOptions);
 
-        switch (answer5)
+        if (selectedIndex == -1) return; // Exit submenu if Esc was pressed
+
+        Console.Clear();
+        switch (selectedIndex)
         {
-            case "1":
+            case 0:
                 ClearCache(1);
                 break;
-            case "2":
+            case 1:
                 ClearCache(2);
                 break;
-            case "3":
+            case 2:
                 ClearCache(3);
                 break;
-            case "4":
+            case 3:
                 AutoClearEnable();
                 break;
-            case "5":
-                AutoClearEnable();
+            case 4:
+                AutoClearDisable();
                 break;
         }
     }
@@ -209,20 +269,42 @@ class AjcUtils
 
     static void RePack()
     {
-        Console.WriteLine("Attempting to RePack asar archive.");
-        try
+        if (Directory.Exists($@"C:\Users\{username}\AppData\Local\Programs\aj-classic"))
         {
-            using AsarArchiver archiver = new(archive, asar);
-            archiver.Archive();
-            archiver.Dispose();
-            if (Directory.Exists(archive))
+            Console.WriteLine("Ajc is installed. Checking for app.asar");
+
+            if (File.Exists(@$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar"))
             {
-                DeleteDirectory(archive);
+                Console.WriteLine("Already archived");
+                Environment.Exit(0);
+            }
+            else if (Directory.Exists(archive))
+            {
+                Console.WriteLine("RePacking asar archive.");
+                try
+                {
+                    using AsarArchiver archiver = new(archive, asar);
+                    archiver.Archive();
+                    archiver.Dispose();
+                    if (Directory.Exists(archive))
+                    {
+                        DeleteDirectory(archive);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No Packed/Unpacked asar detected. (is your install broken?)");
             }
         }
-        catch (Exception ex)
+        else
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine("Ajc is not installed. Exiting...");
+            Environment.Exit(0);
         }
     }
 
@@ -323,7 +405,7 @@ class AjcUtils
                 break;
 
         }
-        
+
     }
 
     public static void DeleteDirectory(string target_dir)
@@ -367,3 +449,4 @@ class AjcUtils
         }
     }
 }
+
