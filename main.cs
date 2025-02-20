@@ -32,25 +32,33 @@ class AjcUtils
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║           AJ Classic Utils             ║");
-            Console.WriteLine("╚════════════════════════════════════════╝");
-            Console.WriteLine(prompt);
-            Console.WriteLine("╔════════════════════════════════════════╗");
+            int windowWidth = Console.WindowWidth;
+            int menuWidth = 40; // Width of the menu box
+
+            // Calculate padding to center the menu
+            int paddingLeft = (windowWidth - menuWidth) / 2;
+
+            string padding = new string(' ', paddingLeft);
+
+            Console.WriteLine(padding + "╔════════════════════════════════════════╗");
+            Console.WriteLine(padding + "║           AJ Classic Utils             ║");
+            Console.WriteLine(padding + "╚════════════════════════════════════════╝");
+            Console.WriteLine(padding + prompt);
+            Console.WriteLine(padding + "╔════════════════════════════════════════╗");
 
             for (int i = 0; i < options.Length; i++)
             {
                 if (i == selectedIndex)
                 {
-                    Console.WriteLine($"║ [*] {options[i].PadRight(34)} ║");
+                    Console.WriteLine(padding + $"║ [*] {options[i].PadRight(34)} ║");
                 }
                 else
                 {
-                    Console.WriteLine($"║ [ ] {options[i].PadRight(34)} ║");
+                    Console.WriteLine(padding + $"║ [ ] {options[i].PadRight(34)} ║");
                 }
             }
 
-            Console.WriteLine("╚════════════════════════════════════════╝");
+            Console.WriteLine(padding + "╚════════════════════════════════════════╝");
 
             ConsoleKeyInfo keyInfo = Console.ReadKey(true); // true to intercept the key press
             if (keyInfo.Key == ConsoleKey.UpArrow)
