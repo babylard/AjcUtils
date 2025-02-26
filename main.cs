@@ -26,6 +26,7 @@ class AjcUtils
         }
     }
 
+    // Shit Copilot wrote
     static int DisplayMenu(string prompt, string[] options)
     {
         int selectedIndex = 0;
@@ -33,32 +34,37 @@ class AjcUtils
         {
             Console.Clear();
             int windowWidth = Console.WindowWidth;
+            int windowHeight = Console.WindowHeight;
             int menuWidth = 40; // Width of the menu box
+            int menuHeight = options.Length + 6; // Height of the menu box (including borders and prompt)
 
-            // Calculate padding to center the menu
+            // Calculate padding to center the menu horizontally and vertically
             int paddingLeft = (windowWidth - menuWidth) / 2;
+            int paddingTop = (windowHeight - menuHeight) / 2;
 
-            string padding = new string(' ', paddingLeft);
+            string paddingLeftStr = new string(' ', paddingLeft);
+            string paddingTopStr = new string('\n', paddingTop);
 
-            Console.WriteLine(padding + "╔════════════════════════════════════════╗");
-            Console.WriteLine(padding + "║           AJ Classic Utils             ║");
-            Console.WriteLine(padding + "╚════════════════════════════════════════╝");
-            Console.WriteLine(padding + prompt);
-            Console.WriteLine(padding + "╔════════════════════════════════════════╗");
+            Console.Write(paddingTopStr);
+            Console.WriteLine(paddingLeftStr + "╔════════════════════════════════════════╗");
+            Console.WriteLine(paddingLeftStr + "║           AJ Classic Utils             ║");
+            Console.WriteLine(paddingLeftStr + "╚════════════════════════════════════════╝");
+            Console.WriteLine(paddingLeftStr + prompt);
+            Console.WriteLine(paddingLeftStr + "╔════════════════════════════════════════╗");
 
             for (int i = 0; i < options.Length; i++)
             {
                 if (i == selectedIndex)
                 {
-                    Console.WriteLine(padding + $"║ [*] {options[i].PadRight(34)} ║");
+                    Console.WriteLine(paddingLeftStr + $"║ [*] {options[i].PadRight(34)} ║");
                 }
                 else
                 {
-                    Console.WriteLine(padding + $"║ [ ] {options[i].PadRight(34)} ║");
+                    Console.WriteLine(paddingLeftStr + $"║ [ ] {options[i].PadRight(34)} ║");
                 }
             }
 
-            Console.WriteLine(padding + "╚════════════════════════════════════════╝");
+            Console.WriteLine(paddingLeftStr + "╚════════════════════════════════════════╝");
 
             ConsoleKeyInfo keyInfo = Console.ReadKey(true); // true to intercept the key press
             if (keyInfo.Key == ConsoleKey.UpArrow)
