@@ -4,4 +4,4 @@ AjcUtils is a Console App written in C# that takes advantage of some abilities o
 > [!NOTE]
 > When cloning this repo, be sure to use `git clone --recursive` to include submodules as well or it won't build. I'm using [AsarSharp](https://github.com/MWR1/asarsharp) to extract and modify Aj Classic's `app.asar`, I reccomend giving it a star.
 
-![WindowsTerminal_a2Qf8VDg2C](https://github.com/user-attachments/assets/124d7151-c98b-489d-8af1-42027fdc0ba9)
+![WindowsTerminal_oTt5Vc6xBA](https://github.com/user-attachments/assets/eab1813b-f356-4799-9ab4-ad396a5c7b49)
