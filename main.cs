@@ -233,6 +233,107 @@ class AjcUtils
         }
     }
 
+    // Simplified functions because I aint typing allat
+    static void EnableDevTools()
+    {
+        ModifyConfig("showTools", "false", "true");
+    }
+
+    static void DisableDevTools()
+    {
+        ModifyConfig("showTools", "true", "false");
+    }
+
+    static void AutoClearEnable()
+    {
+        ModifyConfig("clearCache", "false", "true");
+    }
+
+    static void AutoClearDisable()
+    {
+        ModifyConfig("clearCache", "true", "false");
+    }
+
+    static void DisableUpdates()
+    {
+        ModifyConfig("noUpdater", "false", "true");
+    }
+
+    static void EnableUpdates()
+    {
+        ModifyConfig("noUpdater", "true", "false");
+    }
+
+    // These functions do most of the heavy lifting.
+    static void ClearCache(int JamOrClassic)
+    {
+        string ClassicCache = @$"C:\Users\{username}\AppData\Roaming\AJ Classic";
+        string JamCache = @$"C:\Users\{username}\AppData\Roaming\jam";
+        Console.WriteLine("Clearing Cache");
+
+        switch (JamOrClassic)
+        {
+            case 1: // Deletes Aj Classic Cache
+                if (Directory.Exists(ClassicCache))
+                {
+                    try
+                    {
+                        Directory.Delete(ClassicCache, true);
+                        Console.WriteLine("Cache cleared successfully");
+                    }
+                    catch (IOException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Ajc not installed or Cache is already cleared.");
+                }
+                break;
+
+            case 2: // Deletes Jam Cache (if installed)
+                if (Directory.Exists(JamCache))
+                {
+                    try
+                    {
+                        Directory.Delete(JamCache, true);
+                        Console.WriteLine("Cache cleared successfully");
+                    }
+                    catch (IOException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Jam is not installed or Cache is already cleared.");
+                }
+                break;
+            case 3: // Deletes both caches
+                if (Directory.Exists(ClassicCache) && Directory.Exists(JamCache))
+                {
+                    try
+                    {
+                        Directory.Delete(ClassicCache, true);
+                        Directory.Delete(JamCache, true);
+                        Console.WriteLine("Cache cleared successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No current cache detected or Jam/Ajc is not installed");
+                }
+                break;
+
+        }
+
+    }
+
     // Commonly needed paths that will be used
     static string username = Environment.UserName;
     static string asar = @$"C:\Users\{username}\AppData\Local\Programs\aj-classic\resources\app.asar";
@@ -320,106 +421,6 @@ class AjcUtils
             Console.WriteLine("Ajc is not installed. Exiting...");
             Environment.Exit(0);
         }
-    }
-
-    // Simplified functions because I aint typing allat
-    static void EnableDevTools()
-    {
-        ModifyConfig("showTools", "false", "true");
-    }
-
-    static void DisableDevTools()
-    {
-        ModifyConfig("showTools", "true", "false");
-    }
-
-    static void AutoClearEnable()
-    {
-        ModifyConfig("clearCache", "false", "true");
-    }
-
-    static void AutoClearDisable()
-    {
-        ModifyConfig("clearCache", "true", "false");
-    }
-
-    static void DisableUpdates()
-    {
-        ModifyConfig("noUpdater", "false", "true");
-    }
-
-    static void EnableUpdates()
-    {
-        ModifyConfig("noUpdater", "true", "false");
-    }
-
-    static void ClearCache(int JamOrClassic)
-    {
-        string ClassicCache = @$"C:\Users\{username}\AppData\Roaming\AJ Classic";
-        string JamCache = @$"C:\Users\{username}\AppData\Roaming\jam";
-        Console.WriteLine("Clearing Cache");
-
-        switch (JamOrClassic)
-        {
-            case 1: // Deletes Aj Classic Cache
-                if (Directory.Exists(ClassicCache))
-                {
-                    try
-                    {
-                        Directory.Delete(ClassicCache, true);
-                        Console.WriteLine("Cache cleared successfully");
-                    }
-                    catch (IOException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Ajc not installed or Cache is already cleared.");
-                }
-                break;
-
-            case 2: // Deletes Jam Cache (if installed)
-                if (Directory.Exists(JamCache))
-                {
-                    try
-                    {
-                        Directory.Delete(JamCache, true);
-                        Console.WriteLine("Cache cleared successfully");
-                    }
-                    catch (IOException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Jam is not installed or Cache is already cleared.");
-                }
-                break;
-            case 3: // Deletes both caches
-                if (Directory.Exists(ClassicCache) && Directory.Exists(JamCache))
-                {
-                    try
-                    {
-                        Directory.Delete(ClassicCache, true);
-                        Directory.Delete(JamCache, true);
-                        Console.WriteLine("Cache cleared successfully");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No current cache detected or Jam/Ajc is not installed");
-                }
-                break;
-
-        }
-
     }
 
     public static void DeleteDirectory(string target_dir)
