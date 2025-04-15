@@ -264,7 +264,7 @@ class AjcUtils
         ModifyConfig("noUpdater", "true", "false");
     }
 
-    // These functions do most of the heavy lifting.
+// Actually useful functions
     static void ClearCache(int JamOrClassic)
     {
         string ClassicCache = @$"C:\Users\{username}\AppData\Roaming\AJ Classic";
@@ -311,22 +311,41 @@ class AjcUtils
                 }
                 break;
             case 3: // Deletes both caches
-                if (Directory.Exists(ClassicCache) && Directory.Exists(JamCache))
+                bool classicCacheExists = Directory.Exists(ClassicCache);
+                bool jamCacheExists = Directory.Exists(JamCache);
+
+                if (classicCacheExists || jamCacheExists)
                 {
                     try
                     {
-                        Directory.Delete(ClassicCache, true);
-                        Directory.Delete(JamCache, true);
-                        Console.WriteLine("Cache cleared successfully");
+                        if (classicCacheExists)
+                        {
+                            Directory.Delete(ClassicCache, true);
+                            Console.WriteLine("Aj Classic cache cleared successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Aj Classic cache not found.");
+                        }
+
+                        if (jamCacheExists)
+                        {
+                            Directory.Delete(JamCache, true);
+                            Console.WriteLine("Jam cache cleared successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Jam cache not found.");
+                        }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        Console.WriteLine($"Error while clearing cache: {ex.Message}");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("No current cache detected or Jam/Ajc is not installed");
+                    Console.WriteLine("No current cache detected or Jam/Ajc is not installed.");
                 }
                 break;
 
